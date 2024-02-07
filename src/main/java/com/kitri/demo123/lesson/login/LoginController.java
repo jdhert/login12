@@ -71,7 +71,7 @@ public class LoginController {
             if(Objects.equals(User.get(info.getEmail()), info.getPassword())) {
                 boolean login = true;
                 session.setAttribute("Login", login);
-                return "redirect:/login/validation.html";
+                return "redirect:/todos";
             }
         }
         return "redirect:/login/fail";
