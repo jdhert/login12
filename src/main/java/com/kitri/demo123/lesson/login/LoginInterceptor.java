@@ -13,7 +13,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         Boolean login = (Boolean) session.getAttribute("Login");
         if(login == null || !login) {
-            response.sendRedirect("/login/deny.html");
+            response.sendRedirect("/login");
             return false;
         }
         return true;

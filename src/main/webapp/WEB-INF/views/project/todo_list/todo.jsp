@@ -8,6 +8,9 @@
     <title>Todo List</title>
 </head>
 <body>
+<header>
+
+</header>
 <h1>todos</h1>
 <form id="form">
     <input name="todo1" type="text" class="input" id="input" placeholder="Enter Your todo" autocomplete="off">

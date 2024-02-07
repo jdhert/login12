@@ -3,6 +3,7 @@ package com.kitri.demo123.lesson.login;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.Data;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ import java.util.Objects;
 @RequestMapping("/login")
 public class LoginController {
 
-    HashMap<String, String> User = new HashMap<>();
+    HashMap<String, Deta> User = new HashMap<>();
 
     @GetMapping
     public String show(){
@@ -68,7 +69,7 @@ public class LoginController {
         }
         HttpSession session = request.getSession();
         if(User.containsKey(info.getEmail())){
-            if(Objects.equals(User.get(info.getEmail()), info.getPassword())) {
+            if(Objects.equals(User.get(info.getEmail()).getPassword(), info.getPassword())) {
                 boolean login = true;
                 session.setAttribute("Login", login);
                 return "redirect:/todos";
@@ -85,7 +86,7 @@ public class LoginController {
             return "redirect:/login/fail";
         if(User.containsKey(form.getEmail()))
             return "redirect:/login/fail";
-        User.put(form.getEmail(), form.getPassword());
+        User.put(form.getEmail(), new Deta(form.getPassword(), form.getName()));
         return "redirect:/login/login.html";
     }
 
