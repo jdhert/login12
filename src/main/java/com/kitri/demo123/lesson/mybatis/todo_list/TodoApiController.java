@@ -18,16 +18,12 @@ public class TodoApiController {
     TodoMapper todoMapper;
 
     @GetMapping
-    public ArrayList<ResponseTodo> todos(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        long id = (long) session.getAttribute("id");
+    public ArrayList<ResponseTodo> todos(@SessionAttribute("id")long id) {
         ArrayList<ResponseTodo> list =  (ArrayList<ResponseTodo>) todoMapper.findAll(id);
         return list;
     }
     @PostMapping
-    public void add(@RequestBody RequestTodo todo, HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        long id = (long) session.getAttribute("id");
+    public void add(@RequestBody RequestTodo todo, @SessionAttribute("id")long id) {
         todo.setUser_id(id);
         todoMapper.save(todo);
     }

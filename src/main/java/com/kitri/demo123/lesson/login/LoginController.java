@@ -71,9 +71,6 @@ public class LoginController {
 
     @PostMapping("/a")
     public String validate(@ModelAttribute Info info, HttpServletRequest request){
-        if(info.getCheck() != null){
-
-        }
         HttpSession session = request.getSession();
         ResponseUser user = userMapper.findByEmail(info.getEmail());
         if(user != null){
@@ -82,6 +79,10 @@ public class LoginController {
                 session.setAttribute("Login", login);
                 session.setAttribute("id", user.getId());
                 session.setAttribute("name",user.getName());
+                if(info.getCheck() != null){
+                    session.setAttribute("check", "true");
+                    session.setAttribute("email", user.getEmail());
+                }
                 return "redirect:/todos";
             }
         }
