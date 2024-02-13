@@ -10,7 +10,6 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-    List<ResponseUser> findAll();
 
     ResponseUser findByEmail(String email);
 
