@@ -26,16 +26,17 @@
     <!--    <select id="findAll" resultMap="todoResultMap">-->
     <!--        SELECT * FROM todo-->
     <!--    </select>-->
-    <select id="findAll" resultType="com.kitri.demo123.lesson.mybatis.dto.ResponseTodo">
-        SELECT * FROM todo
+    <select id="findAll" parameterType="Long" resultType="com.kitri.demo123.lesson.mybatis.dto.ResponseTodo">
+        SELECT * FROM todo WHERE user_id = #{value}
     </select>
 
     <insert id="save" parameterType="com.kitri.demo123.lesson.mybatis.dto.RequestTodo">
         INSERT INTO todo (
-            content, done
+            content, done, user_id
         ) VALUES (
         #{content}
         , #{done}
+        , #{user_id}
         )
     </insert>
 

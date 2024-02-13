@@ -1,4 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<% HttpSession session1 = request.getSession();
+
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +14,8 @@
 <header>
 
 </header>
+<h1><%=session1.getAttribute("name")%></h1>
+<a href="/login/logout1">로그아웃</a>
 <h1>todos</h1>
 <form id="form">
     <input name="todo1" type="text" class="input" id="input" placeholder="Enter Your todo" autocomplete="off">

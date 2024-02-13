@@ -1,9 +1,13 @@
 package com.kitri.demo123.lesson.login;
 
+import com.kitri.demo123.lesson.mybatis.dto.RequestUser;
+import com.kitri.demo123.lesson.mybatis.dto.ResponseUser;
+import com.kitri.demo123.lesson.mybatis.mappers.UserMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +18,9 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
+    @Autowired
+    UserMapper userMapper;
+
 
     HashMap<String, Deta> User = new HashMap<>();
 
@@ -68,10 +75,13 @@ public class LoginController {
 
         }
         HttpSession session = request.getSession();
-        if(User.containsKey(info.getEmail())){
-            if(Objects.equals(User.get(info.getEmail()).getPassword(), info.getPassword())) {
+        ResponseUser user = userMapper.findByEmail(info.getEmail());
+        if(user != null){
+            if(Objects.equals(user.getPassword(), info.getPassword())){
                 boolean login = true;
                 session.setAttribute("Login", login);
+                session.setAttribute("id", user.getId());
+                session.setAttribute("name",user.getName());
                 return "redirect:/todos";
             }
         }
@@ -84,9 +94,14 @@ public class LoginController {
             return "redirect:/login/fail";
         if(bindingResult.hasErrors())
             return "redirect:/login/fail";
-        if(User.containsKey(form.getEmail()))
+        ResponseUser user1 = userMapper.findByEmail(form.getEmail());
+        if(user1 != null)
             return "redirect:/login/fail";
-        User.put(form.getEmail(), new Deta(form.getPassword(), form.getName()));
+        RequestUser user = new RequestUser();
+        user.setEmail(form.getEmail());
+        user.setPassword(form.getPassword());
+        user.setName(form.getName());
+        userMapper.save(user);
         return "redirect:/login/login.html";
     }
 
