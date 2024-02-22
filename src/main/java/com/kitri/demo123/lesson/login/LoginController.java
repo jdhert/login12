@@ -12,11 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
 @Controller
-@RequestMapping("/login")
+//@RequestMapping("/login")
 public class LoginController {
     @Autowired
     UserMapper userMapper;
@@ -66,6 +67,7 @@ public class LoginController {
             return "redirect:/login";
         }
     }
+
 
 
 

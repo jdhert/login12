@@ -17,16 +17,34 @@ public class TodoApiController {
     @Autowired
     TodoMapper todoMapper;
 
+//    @GetMapping
+//    public ArrayList<ResponseTodo> todos(@SessionAttribute("id")long id ) {
+//        ArrayList<ResponseTodo> list =  (ArrayList<ResponseTodo>) todoMapper.findAll(id);
+//        return list;
+//    }
     @GetMapping
-    public ArrayList<ResponseTodo> todos(@SessionAttribute("id")long id) {
+    public ArrayList<ResponseTodo> todos(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Long id = (Long) session.getAttribute("id");
+        if(id == null)
+            id = 0L;
         ArrayList<ResponseTodo> list =  (ArrayList<ResponseTodo>) todoMapper.findAll(id);
         return list;
     }
+
+
+
     @PostMapping
-    public void add(@RequestBody RequestTodo todo, @SessionAttribute("id")long id) {
-        todo.setUser_id(id);
+    public void add(@RequestBody RequestTodo todo) {
+        todo.setUser_id(todo.getUser_id());
         todoMapper.save(todo);
     }
+
+//    @PostMapping
+//    public void add(@RequestBody RequestTodo todo, @SessionAttribute("id")long id) {
+//        todo.setUser_id(id);
+//        todoMapper.save(todo);
+//    }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable long id){
